@@ -35,7 +35,8 @@ metadata:
     capabilities: Seamless Upgrades
     categories: Integration & Delivery
     containerImage: quay.io/ansible/galaxy-operator:main
-    description: Galaxy is a platform for managing repositories of software packages
+    description:
+      Galaxy is a platform for managing repositories of software packages
       and making them available to a large number of consumers.
     operators.operatorframework.io/builder: operator-sdk-v1.20.0
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
@@ -46,754 +47,780 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - description: Deploy a new Galaxy instance
-      displayName: Galaxy
-      kind: Galaxy
-      name: galaxies.galaxy.ansible.com
-      specDescriptors:
-      - displayName: Hostname
-        path: hostname
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - displayName: Admin password secret
-        path: admin_password_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Secret where the trusted Certificate Authority Bundle is stored
-        path: bundle_cacert_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Configuration secret for SSO instance
-        displayName: SSO configuration
-        path: sso_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - displayName: Database configuration secret
-        path: postgres_configuration_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - displayName: Database initialization arguments
-        path: postgres_initdb_args
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Database host authentication method
-        path: postgres_host_auth_method
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Database image
-        path: postgres_image
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: PostgreSQL container storage requirements (when using a managed instance)
-        path: postgres_storage_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: PostgreSQL container resource requirements (when using a managed instance)
-        path: postgres_resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Postgres Extra Arguments
-        path: postgres_extra_args
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Postgres Selector
-        path: postgres_selector
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Postgres Tolerations
-        path: postgres_tolerations
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - description: Sets permissions on the /var/lib/pgsql/data for postgres container using an init container (not Openshift)
-        displayName: PostgreSQL initialize data volume
-        path: postgres_data_volume_init
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: Customize the postgres init container commands (Non Openshift)
-        displayName: PostgreSQL Init Container Commands
-        path: postgres_init_container_commands
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Database storage class
-        path: postgres_storage_class
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:io.kubernetes:StorageClass
-      - displayName: Migrant database configuration secret
-        path: postgres_migrant_configuration_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - displayName: Postgres Keep Old Data PVC After Upgrade
-        path: postgres_keep_pvc_after_upgrade
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-      - displayName: Database backup label selector
-        path: postgres_label_selector
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Galaxy Spec Overrides
-        path: spec_overrides
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Node Selector
-        path: node_selector
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Tolerations
-        path: tolerations
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Gunicorn API workers
-        path: gunicorn_api_workers
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:number
-      - displayName: Gunicorn Content workers
-        path: gunicorn_content_workers
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:number
-      - displayName: Gunicorn timeout
-        path: gunicorn_timeout
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:number
-      - displayName: HAProxy timeout
-        path: haproxy_timeout
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Ingress type
-        path: ingress_type
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:select:none
-        - urn:alm:descriptor:com.tectonic.ui:select:Ingress
-        - urn:alm:descriptor:com.tectonic.ui:select:Route
-        - urn:alm:descriptor:com.tectonic.ui:select:LoadBalancer
-        - urn:alm:descriptor:com.tectonic.ui:select:NodePort
-      - displayName: Ingress annotations
-        path: ingress_annotations
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Ingress
-      - displayName: Ingress TLS secret
-        path: ingress_tls_secret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Ingress
-      - displayName: LoadBalancer Annotations
-        path: service_annotations
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:LoadBalancer
-      - displayName: LoadBalancer Protocol
-        path: loadbalancer_protocol
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:select:http
-        - urn:alm:descriptor:com.tectonic.ui:select:https
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:LoadBalancer
-      - displayName: LoadBalancer Port
-        path: loadbalancer_port
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:number
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:LoadBalancer
-      - displayName: Nginx client max body size
-        path: nginx_client_max_body_size
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Nginx proxy read timeout
-        path: nginx_proxy_read_timeout
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Nginx proxy connect timeout
-        path: nginx_proxy_connect_timeout
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Nginx proxy send timeout
-        path: nginx_proxy_send_timeout
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Route DNS host
-        path: route_host
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Route
-      - displayName: Route TLS termination mechanism
-        path: route_tls_termination_mechanism
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:select:Edge
-        - urn:alm:descriptor:com.tectonic.ui:select:Passthrough
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Route
-      - displayName: Route TLS credential secret
-        path: route_tls_secret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Route
-      - displayName: Nodeport port
-        path: nodeport_port
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:NodePort
-      - displayName: Topology Spread Constraints
-        path: topology_spread_constraints
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Storage type
-        path: storage_type
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:select:File
-        - urn:alm:descriptor:com.tectonic.ui:select:S3
-        - urn:alm:descriptor:com.tectonic.ui:select:Azure
-      - displayName: File storage access mode
-        path: file_storage_access_mode
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:File
-        - urn:alm:descriptor:com.tectonic.ui:select:ReadWriteMany
-        - urn:alm:descriptor:com.tectonic.ui:select:ReadWriteOnce
-      - displayName: File storage size
-        path: file_storage_size
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:File
-      - displayName: File storage class
-        path: file_storage_storage_class
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:File
-        - urn:alm:descriptor:io.kubernetes:StorageClass
-      - displayName: S3 storage secret
-        path: object_storage_s3_secret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:S3
-      - displayName: Azure storage secret
-        path: object_storage_azure_secret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:Azure
-      - description: Image pull policy for container image
-        displayName: Image pull policy
-        path: image_pull_policy
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: Image Version
-        displayName: Image Version
-        path: image_version
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: Image Web Version
-        displayName: Image Web Version
-        path: image_web_version
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: Image pull secret for container images
-        displayName: Image pull secret
-        path: image_pull_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:imagePullSecret
-      - description: Image pull secrets for container images
-        displayName: Image pull secrets
-        path: image_pull_secrets
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:imagePullSecrets
-      - description: The deployment affinity
-        displayName: Deployment Affinity
-        path: affinity
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - description: Node affinity is a group of node affinity scheduling
-        displayName: Node Affinity
-        path: affinity.node_affinity
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Pulp settings
-        path: pulp_settings
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Redis deployment configuration
-        path: redis
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - description: The deployment strategy to use to replace existing pods with
-          new ones.
-        displayName: Strategy
-        path: redis.strategy
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:updateStrategy
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: In-memory data store resource requirements
-        path: redis.resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: In-memory data store resource requirements (Deprecated)
-        path: redis_resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Redis image
-        path: redis_image
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Redis storage class
-        path: redis_storage_class
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:io.kubernetes:StorageClass
-      - displayName: Redis storage size
-        path: redis_storage_size
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: (Deprecated) The number of Redis replicas
-        displayName: Replicas
-        path: redis.replicas
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:podCount
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: API server configuration
-        path: api
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - description: The number of API replicas
-        displayName: Replicas
-        path: api.replicas
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:podCount
-      - displayName: API server log level
-        path: api.log_level
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: The deployment strategy to use to replace existing pods with
-          new ones.
-        displayName: Strategy
-        path: api.strategy
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:updateStrategy
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: API server resource requirements
-        path: api.resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
-      - displayName: Content server configuration
-        path: content
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - description: The number of Content replicas.
-        displayName: Replicas
-        path: content.replicas
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:podCount
-      - displayName: Content server log level
-        path: content.log_level
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: The deployment strategy to use to replace existing pods with
-          new ones.
-        displayName: Strategy
-        path: content.strategy
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:updateStrategy
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Content server resource requirements
-        path: content.resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
-      - displayName: Resource manager configuration
-        path: resource_manager
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Resource manager resource requirements
-        path: resource_manager.resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
-      - displayName: Worker configuration
-        path: worker
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - description: The number of Worker replicas.
-        displayName: Replicas
-        path: worker.replicas
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:podCount
-      - description: The deployment strategy to use to replace existing pods with
-          new ones.
-        displayName: Strategy
-        path: worker.strategy
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:updateStrategy
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Worker resource requirements
-        path: worker.resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
-      - displayName: Web server configuration
-        path: web
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - description: The deployment strategy to use to replace existing pods with
-          new ones.
-        displayName: Strategy
-        path: web.strategy
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:updateStrategy
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Web server resource requirements
-        path: web.resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
-      - displayName: Deployment type
-        path: deployment_type
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Custom Resource Key
-        path: custom_resource_key
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Public Base URL
-        path: public_base_url
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Container registry
-        path: registry
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Container project
-        path: project
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Container image
-        path: image
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Web Server image
-        path: image_web
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Image tag
-        path: tag
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Certificate authority trust bundle
-        path: ca_trust_bundle
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Signing scripts configmap
-        path: signing_scripts_configmap
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:ConfigMap
-      - displayName: Signing secret
-        path: signing_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - displayName: Force drop database before restore
-        path: force_drop_db
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-      - displayName: Container token configuration
-        path: container_token_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - displayName: DB fields encryption
-        path: db_fields_encryption_secret
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Scale down deployments to put Galaxy into an idle state
-        displayName: Idle Deployment
-        path: idle_deployment
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: No Log Configuration
-        path: no_log
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-      statusDescriptors:
-      - displayName: Conditions
-        path: conditions
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes.conditions
-      - description: Route to access the instance deployed
-        displayName: URL
-        path: webURL
-        x-descriptors:
-        - urn:alm:descriptor:org.w3:link
-      - description: Admin password for the instance deployed
-        displayName: Admin password
-        path: adminPasswordSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Configuration secret for current deployed database
-        displayName: Database configuration
-        path: databaseConfigurationSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: The type of storage being used by the deployed instance
-        displayName: Storage type
-        path: storageType
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - description: The name of the persistent volume claim used for storage
-        displayName: File storage
-        path: storagePersistentVolumeClaim
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:PersistentVolumeClaim
-      - description: Configuration secret for objectstorage
-        displayName: Objectstorage secret
-        path: storageSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Version of the instance deployed
-        displayName: Version
-        path: deployedVersion
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - description: Image of the instance deployed
-        displayName: Image
-        path: deployedImage
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - description: Configuration secret for previously deployed database
-        displayName: Migrated database
-        path: migrantDatabaseConfigurationSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Configuration secret for encrypting DB fields
-        displayName: DB fields encryption configuration
-        path: dbFieldsEncryptionSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Configuration secret for container token authentication
-        displayName: Container token configuration
-        path: containerTokenSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      version: v1beta1
-    - description: Back up a deployment of the Galaxy, including all hosted Ansible
-        content, secrets and the database. By default, a persistent volume claim will
-        be created using the default StorageClass on your cluster to store the backup
-        on.
-      displayName: Galaxy Backup
-      kind: GalaxyBackup
-      name: galaxybackups.galaxy.ansible.com
-      specDescriptors:
-      - displayName: Deployment name
-        path: deployment_name
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - displayName: Backup persistent volume claim
-        path: backup_pvc
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:PersistentVolumeClaim
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Backup persistent volume claim namespace (Deprecated)
-        path: backup_pvc_namespace
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-        - urn:alm:descriptor:io.kubernetes:Namespace
-      - displayName: Backup PVC storage requirements
-        path: backup_storage_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-      - displayName: Backup Management Pod Resource Requirements
-        path: backup_resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
-      - displayName: Backup PVC storage class
-        path: backup_storage_class
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:io.kubernetes:StorageClass
-      - displayName: Custom Resource Key
-        path: custom_resource_key
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Database restore label selector
-        path: postgres_label_selector
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: No Log Configuration
-        path: no_log
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-      statusDescriptors:
-      - displayName: Conditions
-        path: conditions
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes.conditions
-      - description: The name of the deployment that was backed up
-        displayName: Deployment name
-        path: deploymentName
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - description: The persistent volume claim name used during backup
-        displayName: Backup claim
-        path: backupClaim
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - description: The persistent volume claim namespace used during backup
-        displayName: Backup claim namespace
-        path: backupNamespace
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Namespace
-      - description: The directory data is backed up to on the PVC
-        displayName: Backup directory
-        path: backupDirectory
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - description: The deployment storage type
-        displayName: Deployment storage type
-        path: deploymentStorageType
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - description: Secret for current administrator for deployment
-        displayName: Administrator password secret
-        path: adminPasswordSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Configuration secret for current deployed database
-        displayName: Database configuration
-        path: databaseConfigurationSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Configuration secret for encrypting DB fields
-        displayName: DB fields encryption configuration
-        path: dbFieldsEncryptionSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      - description: Configuration secret for container token authentication
-        displayName: Container token configuration
-        path: containerTokenSecret
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Secret
-      version: v1beta1
-    - description: Restore a previous Galaxy deployment into the namespace
-      displayName: Galaxy Restore
-      kind: GalaxyRestore
-      name: galaxyrestores.galaxy.ansible.com
-      specDescriptors:
-      - displayName: Backup source to restore from
-        path: backup_source
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:select:CR
-        - urn:alm:descriptor:com.tectonic.ui:select:PVC
-      - displayName: Backup name
-        path: backup_name
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:CR
-      - displayName: New Deployment Name
-        path: deployment_name
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      - displayName: Backup persistent volume claim
-        path: backup_pvc
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:PersistentVolumeClaim
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
-      - displayName: Backup persistent volume claim namespace
-        path: backup_pvc_namespace
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes:Namespace
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
-      - displayName: Backup directory in the persistent volume claim
-        path: backup_dir
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
-      - displayName: Configuration for the storage type utilized in the backup
-        path: storage_type
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:select:File
-        - urn:alm:descriptor:com.tectonic.ui:select:S3
-        - urn:alm:descriptor:com.tectonic.ui:select:Azure
-        - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
-      - displayName: Restore Management Pod Resource Requirements
-        path: restore_resource_requirements
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
-      - displayName: Database restore label selector
-        path: postgres_label_selector
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: Custom Resource Key
-        path: custom_resource_key
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:hidden
-      - displayName: No Log Configuration
-        path: no_log
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-      - displayName: Force drop database before restore
-        path: force_drop_db
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:advanced
-        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-      statusDescriptors:
-      - displayName: Conditions
-        path: conditions
-        x-descriptors:
-        - urn:alm:descriptor:io.kubernetes.conditions
-      - description: The state of the restore
-        displayName: Restore status
-        path: restoreComplete
-        x-descriptors:
-        - urn:alm:descriptor:com.tectonic.ui:text
-      version: v1beta1
+      - description: Deploy a new Galaxy instance
+        displayName: Galaxy
+        kind: Galaxy
+        name: galaxies.galaxy.ansible.com
+        specDescriptors:
+          - displayName: Hostname
+            path: hostname
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - displayName: Admin password secret
+            path: admin_password_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Secret where the trusted Certificate Authority Bundle is stored
+            path: bundle_cacert_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Configuration secret for SSO instance
+            displayName: SSO configuration
+            path: sso_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - displayName: Database configuration secret
+            path: postgres_configuration_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - displayName: Database initialization arguments
+            path: postgres_initdb_args
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Database host authentication method
+            path: postgres_host_auth_method
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Database image
+            path: postgres_image
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: PostgreSQL container storage requirements (when using a managed instance)
+            path: postgres_storage_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: PostgreSQL container resource requirements (when using a managed instance)
+            path: postgres_resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Postgres Extra Arguments
+            path: postgres_extra_args
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Postgres Selector
+            path: postgres_selector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Postgres Tolerations
+            path: postgres_tolerations
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - description: Sets permissions on the /var/lib/pgsql/data for postgres container using an init container (not Openshift)
+            displayName: PostgreSQL initialize data volume
+            path: postgres_data_volume_init
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description: Customize the postgres init container commands (Non Openshift)
+            displayName: PostgreSQL Init Container Commands
+            path: postgres_init_container_commands
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Database storage class
+            path: postgres_storage_class
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:io.kubernetes:StorageClass
+          - displayName: Migrant database configuration secret
+            path: postgres_migrant_configuration_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - displayName: Postgres Keep Old Data PVC After Upgrade
+            path: postgres_keep_pvc_after_upgrade
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+          - displayName: Database backup label selector
+            path: postgres_label_selector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Galaxy Spec Overrides
+            path: spec_overrides
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Node Selector
+            path: node_selector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Tolerations
+            path: tolerations
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Gunicorn API workers
+            path: gunicorn_api_workers
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:number
+          - displayName: Gunicorn Content workers
+            path: gunicorn_content_workers
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:number
+          - displayName: Gunicorn timeout
+            path: gunicorn_timeout
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:number
+          - displayName: HAProxy timeout
+            path: haproxy_timeout
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Ingress type
+            path: ingress_type
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:select:none
+              - urn:alm:descriptor:com.tectonic.ui:select:Ingress
+              - urn:alm:descriptor:com.tectonic.ui:select:Route
+              - urn:alm:descriptor:com.tectonic.ui:select:LoadBalancer
+              - urn:alm:descriptor:com.tectonic.ui:select:NodePort
+          - displayName: Ingress annotations
+            path: ingress_annotations
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Ingress
+          - displayName: Ingress TLS secret
+            path: ingress_tls_secret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Ingress
+          - displayName: LoadBalancer Annotations
+            path: service_annotations
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:LoadBalancer
+          - displayName: LoadBalancer Protocol
+            path: loadbalancer_protocol
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:select:http
+              - urn:alm:descriptor:com.tectonic.ui:select:https
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:LoadBalancer
+          - displayName: LoadBalancer Port
+            path: loadbalancer_port
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:number
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:LoadBalancer
+          - displayName: Nginx client max body size
+            path: nginx_client_max_body_size
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Nginx proxy read timeout
+            path: nginx_proxy_read_timeout
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Nginx proxy connect timeout
+            path: nginx_proxy_connect_timeout
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Nginx proxy send timeout
+            path: nginx_proxy_send_timeout
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Route DNS host
+            path: route_host
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Route
+          - displayName: Route TLS termination mechanism
+            path: route_tls_termination_mechanism
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:select:Edge
+              - urn:alm:descriptor:com.tectonic.ui:select:Passthrough
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Route
+          - displayName: Route TLS credential secret
+            path: route_tls_secret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:Route
+          - displayName: Nodeport port
+            path: nodeport_port
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:ingress_type:NodePort
+          - displayName: Topology Spread Constraints
+            path: topology_spread_constraints
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Storage type
+            path: storage_type
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:select:File
+              - urn:alm:descriptor:com.tectonic.ui:select:S3
+              - urn:alm:descriptor:com.tectonic.ui:select:Azure
+          - displayName: File storage access mode
+            path: file_storage_access_mode
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:File
+              - urn:alm:descriptor:com.tectonic.ui:select:ReadWriteMany
+              - urn:alm:descriptor:com.tectonic.ui:select:ReadWriteOnce
+          - displayName: File storage size
+            path: file_storage_size
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:File
+          - displayName: File storage class
+            path: file_storage_storage_class
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:File
+              - urn:alm:descriptor:io.kubernetes:StorageClass
+          - displayName: S3 storage secret
+            path: object_storage_s3_secret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:S3
+          - displayName: Azure storage secret
+            path: object_storage_azure_secret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:storage_type:Azure
+          - description: Image pull policy for container image
+            displayName: Image pull policy
+            path: image_pull_policy
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description: Image Version
+            displayName: Image Version
+            path: image_version
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description: Image Web Version
+            displayName: Image Web Version
+            path: image_web_version
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description: Image pull secret for container images
+            displayName: Image pull secret
+            path: image_pull_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:imagePullSecret
+          - description: Image pull secrets for container images
+            displayName: Image pull secrets
+            path: image_pull_secrets
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:imagePullSecrets
+          - description: The deployment affinity
+            displayName: Deployment Affinity
+            path: affinity
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - description: Node affinity is a group of node affinity scheduling
+            displayName: Node Affinity
+            path: affinity.node_affinity
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Pulp settings
+            path: pulp_settings
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Redis deployment configuration
+            path: redis
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - description:
+              The deployment strategy to use to replace existing pods with
+              new ones.
+            displayName: Strategy
+            path: redis.strategy
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:updateStrategy
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: In-memory data store resource requirements
+            path: redis.resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: In-memory data store resource requirements (Deprecated)
+            path: redis_resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Redis image
+            path: redis_image
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Redis storage class
+            path: redis_storage_class
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:io.kubernetes:StorageClass
+          - displayName: Redis storage size
+            path: redis_storage_size
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description: (Deprecated) The number of Redis replicas
+            displayName: Replicas
+            path: redis.replicas
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:podCount
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: API server configuration
+            path: api
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - description: The number of API replicas
+            displayName: Replicas
+            path: api.replicas
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:podCount
+          - displayName: API server log level
+            path: api.log_level
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description:
+              The deployment strategy to use to replace existing pods with
+              new ones.
+            displayName: Strategy
+            path: api.strategy
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:updateStrategy
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: API server resource requirements
+            path: api.resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - displayName: API server security context settings
+            path: api.security_context_settings
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Content server configuration
+            path: content
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - description: The number of Content replicas.
+            displayName: Replicas
+            path: content.replicas
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:podCount
+          - displayName: Content server log level
+            path: content.log_level
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description:
+              The deployment strategy to use to replace existing pods with
+              new ones.
+            displayName: Strategy
+            path: content.strategy
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:updateStrategy
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Content server resource requirements
+            path: content.resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - displayName: Resource manager configuration
+            path: resource_manager
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Content server security context settings
+            path: content.security_context_settings
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Resource manager resource requirements
+            path: resource_manager.resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - displayName: Worker configuration
+            path: worker
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - description: The number of Worker replicas.
+            displayName: Replicas
+            path: worker.replicas
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:podCount
+          - description:
+              The deployment strategy to use to replace existing pods with
+              new ones.
+            displayName: Strategy
+            path: worker.strategy
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:updateStrategy
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Worker resource requirements
+            path: worker.resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - displayName: Worker security context settings
+            path: worker.security_context_settings
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Web server configuration
+            path: web
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - description:
+              The deployment strategy to use to replace existing pods with
+              new ones.
+            displayName: Strategy
+            path: web.strategy
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:updateStrategy
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Web server resource requirements
+            path: web.resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - displayName: Web server security context settings
+            path: web.security_context_settings
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Deployment type
+            path: deployment_type
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Custom Resource Key
+            path: custom_resource_key
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Public Base URL
+            path: public_base_url
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Container registry
+            path: registry
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Container project
+            path: project
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Container image
+            path: image
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Web Server image
+            path: image_web
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Image tag
+            path: tag
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Certificate authority trust bundle
+            path: ca_trust_bundle
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Signing scripts configmap
+            path: signing_scripts_configmap
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:ConfigMap
+          - displayName: Signing secret
+            path: signing_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - displayName: Force drop database before restore
+            path: force_drop_db
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+          - displayName: Container token configuration
+            path: container_token_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - displayName: DB fields encryption
+            path: db_fields_encryption_secret
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Scale down deployments to put Galaxy into an idle state
+            displayName: Idle Deployment
+            path: idle_deployment
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: No Log Configuration
+            path: no_log
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+        statusDescriptors:
+          - displayName: Conditions
+            path: conditions
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes.conditions
+          - description: Route to access the instance deployed
+            displayName: URL
+            path: webURL
+            x-descriptors:
+              - urn:alm:descriptor:org.w3:link
+          - description: Admin password for the instance deployed
+            displayName: Admin password
+            path: adminPasswordSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Configuration secret for current deployed database
+            displayName: Database configuration
+            path: databaseConfigurationSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: The type of storage being used by the deployed instance
+            displayName: Storage type
+            path: storageType
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The name of the persistent volume claim used for storage
+            displayName: File storage
+            path: storagePersistentVolumeClaim
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:PersistentVolumeClaim
+          - description: Configuration secret for objectstorage
+            displayName: Objectstorage secret
+            path: storageSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Version of the instance deployed
+            displayName: Version
+            path: deployedVersion
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Image of the instance deployed
+            displayName: Image
+            path: deployedImage
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Configuration secret for previously deployed database
+            displayName: Migrated database
+            path: migrantDatabaseConfigurationSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Configuration secret for encrypting DB fields
+            displayName: DB fields encryption configuration
+            path: dbFieldsEncryptionSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Configuration secret for container token authentication
+            displayName: Container token configuration
+            path: containerTokenSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+        version: v1beta1
+      - description:
+          Back up a deployment of the Galaxy, including all hosted Ansible
+          content, secrets and the database. By default, a persistent volume claim will
+          be created using the default StorageClass on your cluster to store the backup
+          on.
+        displayName: Galaxy Backup
+        kind: GalaxyBackup
+        name: galaxybackups.galaxy.ansible.com
+        specDescriptors:
+          - displayName: Deployment name
+            path: deployment_name
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - displayName: Backup persistent volume claim
+            path: backup_pvc
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:PersistentVolumeClaim
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Backup persistent volume claim namespace (Deprecated)
+            path: backup_pvc_namespace
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+              - urn:alm:descriptor:io.kubernetes:Namespace
+          - displayName: Backup PVC storage requirements
+            path: backup_storage_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: Backup Management Pod Resource Requirements
+            path: backup_resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - displayName: Backup PVC storage class
+            path: backup_storage_class
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:io.kubernetes:StorageClass
+          - displayName: Custom Resource Key
+            path: custom_resource_key
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Database restore label selector
+            path: postgres_label_selector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: No Log Configuration
+            path: no_log
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+        statusDescriptors:
+          - displayName: Conditions
+            path: conditions
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes.conditions
+          - description: The name of the deployment that was backed up
+            displayName: Deployment name
+            path: deploymentName
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The persistent volume claim name used during backup
+            displayName: Backup claim
+            path: backupClaim
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The persistent volume claim namespace used during backup
+            displayName: Backup claim namespace
+            path: backupNamespace
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Namespace
+          - description: The directory data is backed up to on the PVC
+            displayName: Backup directory
+            path: backupDirectory
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The deployment storage type
+            displayName: Deployment storage type
+            path: deploymentStorageType
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Secret for current administrator for deployment
+            displayName: Administrator password secret
+            path: adminPasswordSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Configuration secret for current deployed database
+            displayName: Database configuration
+            path: databaseConfigurationSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Configuration secret for encrypting DB fields
+            displayName: DB fields encryption configuration
+            path: dbFieldsEncryptionSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: Configuration secret for container token authentication
+            displayName: Container token configuration
+            path: containerTokenSecret
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Secret
+        version: v1beta1
+      - description: Restore a previous Galaxy deployment into the namespace
+        displayName: Galaxy Restore
+        kind: GalaxyRestore
+        name: galaxyrestores.galaxy.ansible.com
+        specDescriptors:
+          - displayName: Backup source to restore from
+            path: backup_source
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:select:CR
+              - urn:alm:descriptor:com.tectonic.ui:select:PVC
+          - displayName: Backup name
+            path: backup_name
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:CR
+          - displayName: New Deployment Name
+            path: deployment_name
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - displayName: Backup persistent volume claim
+            path: backup_pvc
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:PersistentVolumeClaim
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
+          - displayName: Backup persistent volume claim namespace
+            path: backup_pvc_namespace
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes:Namespace
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
+          - displayName: Backup directory in the persistent volume claim
+            path: backup_dir
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
+          - displayName: Configuration for the storage type utilized in the backup
+            path: storage_type
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:select:File
+              - urn:alm:descriptor:com.tectonic.ui:select:S3
+              - urn:alm:descriptor:com.tectonic.ui:select:Azure
+              - urn:alm:descriptor:com.tectonic.ui:fieldDependency:backup_source:PVC
+          - displayName: Restore Management Pod Resource Requirements
+            path: restore_resource_requirements
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - displayName: Database restore label selector
+            path: postgres_label_selector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: Custom Resource Key
+            path: custom_resource_key
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:hidden
+          - displayName: No Log Configuration
+            path: no_log
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+          - displayName: Force drop database before restore
+            path: force_drop_db
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+        statusDescriptors:
+          - displayName: Conditions
+            path: conditions
+            x-descriptors:
+              - urn:alm:descriptor:io.kubernetes.conditions
+          - description: The state of the restore
+            displayName: Restore status
+            path: restoreComplete
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+        version: v1beta1
   description: |-
 
     # Galaxy-Operator
@@ -865,202 +892,202 @@ spec:
   install:
     spec:
       clusterPermissions:
-      - rules:
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          - routes/custom-host
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          - rbac.authorization.k8s.io
-          resources:
-          - secrets
-          - pods
-          - pods/exec
-          - pods/log
-          - services
-          - services/finalizers
-          - endpoints
-          - persistentvolumeclaims
-          - events
-          - configmaps
-          - roles
-          - rolebindings
-          - serviceaccounts
-          verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
-        - apiGroups:
-          - apps
-          - networking.k8s.io
-          resources:
-          - deployments
-          - daemonsets
-          - replicasets
-          - statefulsets
-          - ingresses
-          verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
-        - apiGroups:
-          - ""
-          resources:
-          - nodes
-          verbs:
-          - get
-          - list
-        - apiGroups:
-          - apps
-          resources:
-          - deployments/scale
-          verbs:
-          - patch
-        - apiGroups:
-          - galaxy.ansible.com
-          resources:
-          - galaxies
-          - galaxies/status
-          - galaxies/finalizers
-          - galaxybackups
-          - galaxybackups/status
-          - galaxybackups/finalizers
-          - galaxyrestores
-          - galaxyrestores/status
-          - galaxyrestores/finalizers
-          verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
-        - apiGroups:
-          - authentication.k8s.io
-          resources:
-          - tokenreviews
-          verbs:
-          - create
-        - apiGroups:
-          - authorization.k8s.io
-          resources:
-          - subjectaccessreviews
-          verbs:
-          - create
-        serviceAccountName: galaxy-operator-sa
+        - rules:
+            - apiGroups:
+                - route.openshift.io
+              resources:
+                - routes
+                - routes/custom-host
+              verbs:
+                - "*"
+            - apiGroups:
+                - ""
+                - rbac.authorization.k8s.io
+              resources:
+                - secrets
+                - pods
+                - pods/exec
+                - pods/log
+                - services
+                - services/finalizers
+                - endpoints
+                - persistentvolumeclaims
+                - events
+                - configmaps
+                - roles
+                - rolebindings
+                - serviceaccounts
+              verbs:
+                - create
+                - delete
+                - get
+                - list
+                - patch
+                - update
+                - watch
+            - apiGroups:
+                - apps
+                - networking.k8s.io
+              resources:
+                - deployments
+                - daemonsets
+                - replicasets
+                - statefulsets
+                - ingresses
+              verbs:
+                - create
+                - delete
+                - get
+                - list
+                - patch
+                - update
+                - watch
+            - apiGroups:
+                - ""
+              resources:
+                - nodes
+              verbs:
+                - get
+                - list
+            - apiGroups:
+                - apps
+              resources:
+                - deployments/scale
+              verbs:
+                - patch
+            - apiGroups:
+                - galaxy.ansible.com
+              resources:
+                - galaxies
+                - galaxies/status
+                - galaxies/finalizers
+                - galaxybackups
+                - galaxybackups/status
+                - galaxybackups/finalizers
+                - galaxyrestores
+                - galaxyrestores/status
+                - galaxyrestores/finalizers
+              verbs:
+                - create
+                - delete
+                - get
+                - list
+                - patch
+                - update
+                - watch
+            - apiGroups:
+                - authentication.k8s.io
+              resources:
+                - tokenreviews
+              verbs:
+                - create
+            - apiGroups:
+                - authorization.k8s.io
+              resources:
+                - subjectaccessreviews
+              verbs:
+                - create
+          serviceAccountName: galaxy-operator-sa
       deployments:
-      - name: galaxy-operator-controller-manager
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              control-plane: controller-manager
-          strategy: {}
-          template:
-            metadata:
-              labels:
+        - name: galaxy-operator-controller-manager
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
                 control-plane: controller-manager
-            spec:
-              containers:
-              - args:
-                - --secure-listen-address=0.0.0.0:8443
-                - --upstream=http://127.0.0.1:8080/
-                - --logtostderr=true
-                - --v=10
-                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.12.0
-                name: kube-rbac-proxy
-                ports:
-                - containerPort: 8443
-                  name: https
-                resources: {}
-              - args:
-                - --metrics-addr=127.0.0.1:8080
-                - --enable-leader-election
-                - --leader-election-id=galaxy-operator
-                env:
-                - name: ANSIBLE_GATHERING
-                  value: explicit
-                - name: ANSIBLE_DEBUG_LOGS
-                  value: "false"
-                - name: RELATED_IMAGE_GALAXY
-                  value: quay.io/ansible/galaxy-ng:latest
-                - name: RELATED_IMAGE_GALAXY_WEB
-                  value: quay.io/ansible/galaxy-ui:latest
-                - name: RELATED_IMAGE_GALAXY_REDIS
-                  value: redis:7
-                - name: RELATED_IMAGE_GALAXY_POSTGRES
-                  value: quay.io/sclorg/postgresql-15-c9s:latest
-                - name: RELATED_IMAGE_GALAXY_INIT_GPG_CONTAINER
-                  value: quay.io/centos/centos:stream9
-                image: quay.io/ansible/galaxy-operator:main
-                name: galaxy-operator
-                resources: {}
-              terminationGracePeriodSeconds: 10
+            strategy: {}
+            template:
+              metadata:
+                labels:
+                  control-plane: controller-manager
+              spec:
+                containers:
+                  - args:
+                      - --secure-listen-address=0.0.0.0:8443
+                      - --upstream=http://127.0.0.1:8080/
+                      - --logtostderr=true
+                      - --v=10
+                    image: gcr.io/kubebuilder/kube-rbac-proxy:v0.12.0
+                    name: kube-rbac-proxy
+                    ports:
+                      - containerPort: 8443
+                        name: https
+                    resources: {}
+                  - args:
+                      - --metrics-addr=127.0.0.1:8080
+                      - --enable-leader-election
+                      - --leader-election-id=galaxy-operator
+                    env:
+                      - name: ANSIBLE_GATHERING
+                        value: explicit
+                      - name: ANSIBLE_DEBUG_LOGS
+                        value: "false"
+                      - name: RELATED_IMAGE_GALAXY
+                        value: quay.io/ansible/galaxy-ng:latest
+                      - name: RELATED_IMAGE_GALAXY_WEB
+                        value: quay.io/ansible/galaxy-ui:latest
+                      - name: RELATED_IMAGE_GALAXY_REDIS
+                        value: redis:7
+                      - name: RELATED_IMAGE_GALAXY_POSTGRES
+                        value: quay.io/sclorg/postgresql-15-c9s:latest
+                      - name: RELATED_IMAGE_GALAXY_INIT_GPG_CONTAINER
+                        value: quay.io/centos/centos:stream9
+                    image: quay.io/ansible/galaxy-operator:main
+                    name: galaxy-operator
+                    resources: {}
+                terminationGracePeriodSeconds: 10
       permissions:
-      - rules:
-        - apiGroups:
-          - ""
-          resources:
-          - configmaps
-          verbs:
-          - get
-          - list
-          - watch
-          - create
-          - update
-          - patch
-          - delete
-        - apiGroups:
-          - ""
-          resources:
-          - events
-          verbs:
-          - create
-          - patch
-        serviceAccountName: galaxy-operator-sa
+        - rules:
+            - apiGroups:
+                - ""
+              resources:
+                - configmaps
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
+            - apiGroups:
+                - ""
+              resources:
+                - events
+              verbs:
+                - create
+                - patch
+          serviceAccountName: galaxy-operator-sa
     strategy: deployment
   installModes:
-  - supported: true
-    type: OwnNamespace
-  - supported: false
-    type: SingleNamespace
-  - supported: false
-    type: MultiNamespace
-  - supported: false
-    type: AllNamespaces
+    - supported: true
+      type: OwnNamespace
+    - supported: false
+      type: SingleNamespace
+    - supported: false
+      type: MultiNamespace
+    - supported: false
+      type: AllNamespaces
   keywords:
-  - galaxy
-  - pulp
-  - pulpcore
-  - content
-  - repositories
-  - lifecycle
+    - galaxy
+    - pulp
+    - pulpcore
+    - content
+    - repositories
+    - lifecycle
   links:
-  - name: Galaxy-Operator
-    url: https://github.com/ansible/galaxy-operator
-  - name: Docs
-    url: https://galaxy-operator.readthedocs.io
-  - name: Galaxy
-    url: https://github.com/ansible/galaxy_ng
-  - name: Ansible Galaxy Community
-    url: https://forum.ansible.com
-  - name: Pulp Project
-    url: https://pulpproject.org
+    - name: Galaxy-Operator
+      url: https://github.com/ansible/galaxy-operator
+    - name: Docs
+      url: https://galaxy-operator.readthedocs.io
+    - name: Galaxy
+      url: https://github.com/ansible/galaxy_ng
+    - name: Ansible Galaxy Community
+      url: https://forum.ansible.com
+    - name: Pulp Project
+      url: https://pulpproject.org
   maintainers:
-  - name: Ansible Galaxy Community
+    - name: Ansible Galaxy Community
   maturity: alpha
   minKubeVersion: 1.24.0
   provider:
