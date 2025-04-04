@@ -60,7 +60,7 @@ spec:
         checksum-secret-{{ secret }}: "{{ lookup('ansible.builtin.vars', secret, default='')["resources"][0]["data"] | default('') | sha1 }}"
 {% endfor %}
     spec:
-{% if is_k8s|bool) or (security_context_settings|length) %}
+{% if (is_k8s|bool) or (security_context_settings|length) %}
       securityContext:
 {% if is_k8s|bool %}
         runAsUser: 1000
