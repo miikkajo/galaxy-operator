@@ -53,6 +53,10 @@ spec:
         checksum-secret-{{ secret }}: "{{ lookup('ansible.builtin.vars', secret, default='')["resources"][0]["data"] | default('') | sha1 }}"
 {% endfor %}
     spec:
+{% if (security_context_settings|length) %}
+      securityContext:
+        {{ security_context_settings | to_nice_yaml | indent(8) }}
+{% endif %}
 {% if _node_affinity is defined %}
       affinity:
         nodeAffinity: {{ _node_affinity }}
