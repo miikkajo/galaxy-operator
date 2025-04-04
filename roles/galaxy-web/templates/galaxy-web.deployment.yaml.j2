@@ -45,7 +45,7 @@ spec:
     spec:
 {% if (security_context_settings|length) %}
       securityContext:
-        {{ security_context_settings | to_nice_yaml | indent(8) }}
+        {{ security_context_settings | to_nice_yaml | indent(width=8) }}
 {% endif %}
 {% if _node_affinity is defined %}
       affinity:
