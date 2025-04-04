@@ -7,3 +7,5 @@ raw_spec: "{{ vars['_galaxy_ansible_com_galaxy']['spec'] }}"
 
 gunicorn_timeout: 90
 gunicorn_content_workers: 2
+
+security_context_settings: {}

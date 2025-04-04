@@ -101,6 +101,11 @@ spec:
             path: postgres_resource_requirements
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:advanced
+          - displayName: PostgreSQL container security context settings
+            path: postgres_security_context_settings
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:advanced
+              - urn:alm:descriptor:com.tectonic.ui:hidden
           - displayName: Postgres Extra Arguments
             path: postgres_extra_args
             x-descriptors:

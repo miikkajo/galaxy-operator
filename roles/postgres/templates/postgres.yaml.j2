@@ -52,6 +52,10 @@ spec:
           imagePullPolicy: '{{ image_pull_policy }}'
           securityContext:
             runAsUser: 0
+{% if postgres_security_context_settings|length %}
+          {{ postgres_security_context_settings | to_nice_yaml | indent(12) }}
+{% endif %}
+
           command:
             - /bin/sh
             - -c

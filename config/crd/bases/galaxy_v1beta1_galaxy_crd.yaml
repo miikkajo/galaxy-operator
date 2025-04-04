@@ -133,6 +133,10 @@ spec:
                           type: string
                       type: object
                   type: object
+                postgres_security_context_settings:
+                  description: Key/values that will be set under the pod-level securityContext field
+                  type: object
+                  x-kubernetes-preserve-unknown-fields: true
                 postgres_storage_class:
                   description: Storage class to use for the PostgreSQL PVC
                   type: string
