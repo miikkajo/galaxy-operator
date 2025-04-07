@@ -43,9 +43,9 @@ spec:
         app.kubernetes.io/part-of: '{{ deployment_type }}'
         app.kubernetes.io/managed-by: '{{ deployment_type }}-operator'
     spec:
-{% if (security_context_settings|length) %}
+{% if (combined_web.security_context_settings|length) > 0 %}
       securityContext:
-        {{ security_context_settings | to_nice_yaml | indent(width=8) }}
+        {{ combined_web.security_context_settings | to_nice_yaml | indent(width=8) }}
 {% endif %}
 {% if _node_affinity is defined %}
       affinity:

@@ -1,8 +1,8 @@
 ---
-image_pull_secret: ''
+image_pull_secret: ""
 image_pull_secrets: []
 operator_service_account_name: '{{ lookup("env","OPERATOR_SA_NAME") | default("galaxy-operator-sa",true) }}'
-bundle_cacert_secret: ''
+bundle_cacert_secret: ""
 
 is_k8s: false
 is_openshift: false
@@ -20,6 +20,7 @@ _api:
     requests:
       cpu: 200m
       memory: 512Mi
+  security_context_settings: {}
 
 content: {}
 _content:
@@ -29,6 +30,7 @@ _content:
     requests:
       cpu: 200m
       memory: 512Mi
+  security_context_settings: {}
 
 web: {}
 _web:
@@ -37,6 +39,7 @@ _web:
     requests:
       cpu: 200m
       memory: 512Mi
+  security_context_settings: {}
 
 worker: {}
 _worker:
@@ -45,6 +48,7 @@ _worker:
     requests:
       cpu: 200m
       memory: 512Mi
+  security_context_settings: {}
 
 redis: {}
 _redis:
@@ -56,17 +60,16 @@ _redis:
       cpu: 200m
       memory: 512Mi
 
-
 # Secret to lookup that provide the admin password
 #
-admin_password_secret: ''
+admin_password_secret: ""
 
-admin_password_name: '{{ ansible_operator_meta.name }}-admin-password'
+admin_password_name: "{{ ansible_operator_meta.name }}-admin-password"
 
 # object_storage_configuration.yml
 is_file_storage: true
 
-object_storage_path: ''
+object_storage_path: ""
 
 # s3-storage-configuration.yml
 s3_secret_data_available: false
@@ -99,10 +102,10 @@ default_azure_settings:
 _postgres_image: quay.io/sclorg/postgresql-15-c9s:latest
 
 # Secret to lookup that provide the PostgreSQL configuration
-postgres_configuration_secret: '{{ ansible_operator_meta.name }}-postgres-configuration'
+postgres_configuration_secret: "{{ ansible_operator_meta.name }}-postgres-configuration"
 
 # Secret to lookup that provide the PostgreSQL configuration for old database
-postgres_migrant_configuration_secret: ''
+postgres_migrant_configuration_secret: ""
 
 # Add a topologySpreadConstraints for the Galaxy pods.
 # Specify as literal block. E.g.:
@@ -113,7 +116,7 @@ postgres_migrant_configuration_secret: ''
 #     labelSelector:
 #       matchLabels:
 #         app.kubernetes.io/name: "<resourcename>"
-topology_spread_constraints: ''
+topology_spread_constraints: ""
 
 # Add a nodeSelector for the Galaxy pods. It must match a node's labels for the pod
 # to be scheduled on that node. Specify as literal block. E.g.:
@@ -121,7 +124,7 @@ topology_spread_constraints: ''
 #   disktype: ssd
 #   kubernetes.io/arch: amd64
 #   kubernetes.io/os: linux
-node_selector: ''
+node_selector: ""
 
 # Add node tolerations for the Galaxy pods. Specify as literal block. E.g.:
 # tolerations: |
@@ -129,30 +132,29 @@ node_selector: ''
 #     operator: "Equal"
 #     value: "Galaxy"
 #     effect: "NoSchedule"
-tolerations: ''
+tolerations: ""
 
-web_protocol: 'http'
+web_protocol: "http"
 ingress_type: none
 
 # Host to create the root with.
 # If not specific will default to <instance-name>-<namespace>-<routerCanonicalHostname>
 #
-route_host: ''
+route_host: ""
 
-hostname: '{{ deployment_type }}.example.com'
+hostname: "{{ deployment_type }}.example.com"
 
 # TLS secret for the ingress. The secret either has to exist before hand with
 # the corresponding cert and key or just be an indicator for where an automated
 # process like cert-manager (enabled via annotations) will store the TLS
 # certificate and key.
-ingress_tls_secret: ''
+ingress_tls_secret: ""
 
 # Secret to lookup that provide the TLS specific
 # credentials to deploy
 #
-route_tls_secret: ''
-
+route_tls_secret: ""
 
 # Set content host
-content_host: '{{ ansible_operator_meta.name }}-content-svc'
-content_port: '24816'
+content_host: "{{ ansible_operator_meta.name }}-content-svc"
+content_port: "24816"

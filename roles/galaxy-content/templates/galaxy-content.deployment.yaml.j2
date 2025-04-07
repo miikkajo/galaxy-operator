@@ -60,14 +60,14 @@ spec:
         checksum-secret-{{ secret }}: "{{ lookup('ansible.builtin.vars', secret, default='')["resources"][0]["data"] | default('') | sha1 }}"
 {% endfor %}
     spec:
-{% if (is_k8s|bool) or (security_context_settings|length) %}
+{% if (is_k8s|bool) or (combined_content.security_context_settings|length) > 0 %}
       securityContext:
 {% if is_k8s|bool %}
         runAsUser: 1000
         fsGroup: 1000
 {% endif %}
-{% if security_context_settings|length %}
-        {{ security_context_settings | to_nice_yaml | indent(width=8) }}
+{% if (combined_content.security_context_settings | length) > 0 %}
+        {{ combined_content.security_context_settings | to_nice_yaml | indent(width=8) }}
 {% endif %}
 {% endif %}
 {% if _node_affinity is defined %}

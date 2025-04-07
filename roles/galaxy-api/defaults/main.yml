@@ -22,5 +22,3 @@ keycloak_realm_available: false
 
 gunicorn_timeout: 90
 gunicorn_api_workers: 2
-
-security_context_settings: {}
